@@ -1,19 +1,34 @@
 # Curriculum Contrastive Learning of Image Representations via Sample Reweighting
+*Joel Neeser, Jérôme Kuner, Jonas Mehr, Lukas Mouton — Group Project, ETH Zurich, 2022*
 
-This repository contains the code to reproduce the results obtained for
+**Download the PDF** → [paper.pdf](./paper.pdf)
+
+> **Abstract**
+> How should we choose negative examples for contrastive learning? Early
+> approaches simply sample uniformly at random from the training data, while more
+> sophisticated methods attempt to pick suitable negative examples based on their
+> hardness. We present a novel sample reweighting scheme that allows for varying
+> the hardness of the considered negative examples as training progresses. It
+> assesses the hardness of the possible negative examples and assigns weights
+> based on how close they are to the currently desired hardness. Empirically, we
+> find that varying the difficulty of negative examples during training does not
+> improve performance in general, while focusing exclusively on semi-hard examples
+> does. 
+
+This repository contains the code to reproduce the results obtained in
 "Curriculum Contrastive Learning of Image Representations via Sample
 Reweighting".
 
 ## Reproducing the Results
 
-1. Inside an activated virtual environment, make sure all the requirements in `requirements.txt` are satisfied, e.g., by running `pip install -r requirements.txt`. The code was tested with python 3 and the modules listed in `requirements.txt`.
+1. Inside an activated virtual environment, confirm that all requirements in `requirements.txt` are satisfied, e.g., by running `pip install -r requirements.txt`. The code was tested with python 3 and the modules listed in `requirements.txt`.
 2. Create a \*.yaml configuration file <config_name>.yaml and put it in `config/`. An example configuration file can be found at `config/config_example.yaml`.
 3. To run the code with the given configuration file, pass the name of the config as an argument to `run.py` as follows: `python3 run.py <config_name>.yaml`. Make sure that this command is run from the base directory, where `run.py` is located.
 4. The script will train and test the model and produce a \*.json file named `<experiment>.json` that will be saved to `experiment_logs/`, where \<experiment\> is the value that was given for experiment in the configuration file. The produced file contains several results from training and testing.
 
 ## Obtained Results
 
-The logs of the experiments that we conducted can be found in `experiment_logs/`, the corresponding configuration files in `config`. Running one such experiment on a GPU on the EULER cluster with 4 CPU cores, 4096 MB RAM per core / 16384 MB in total should take approximately 7.5 hours.
+The logs of the experiments that we conducted and the corresponding configuration files can be found in `experiment_logs/` and `config/`, respectively. Running one such experiment on a GPU on the ETH EULER cluster with 4 CPU cores (4096 MB RAM per core, 16384 MB in total) should take approximately 7.5 hours.
 
 ## Configuration Parameters
 
@@ -31,13 +46,6 @@ This is a short explanation of the most important configuration parameters that 
 | begin | The weight mean used in the first epoch |
 | end | The weight mean used after \<steps\> epochs |
 | steps | The number of steps to reach the last value of the schedule |
-
-
-## Authors:
-- Joel Neeser
-- Jérôme Kuner
-- Jonas Mehr
-- Lukas Mouton
 
 ## Licenses
 
