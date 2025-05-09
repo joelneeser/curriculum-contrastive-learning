@@ -1,0 +1,72 @@
+experiment: "experiment_C4" #CIFAR100: WeightedNTXent with temp=0.1, sigma=0.5, RandomParam in [-1,1] for 500 epochs with batch size 256, computing model score every 100 epochs
+seed: 42
+encoder_architecture:
+  name: "ResNet50"
+pretraining:
+  training: True
+  batch_size: 256
+  num_workers_loader: 4
+  max_epochs: 500
+  projection:
+    use_projection: True
+    hidden_layer_sizes: None
+    projection_dimension: 128
+  loss:
+    name: WeightedNTXent
+    loss_config:
+      temperature: 0.1
+      weight: GaussianWeight
+      weight_normalization: negatives_constant_total_weight # or None
+      weight_config:
+        sigma: 0.5
+        mean: RandomParam
+        mean_config:
+          begin: -1
+          end: 1
+          factor: 0.99
+          steps: 100
+        b_l: -1
+        b_u: 1
+  optimizer:
+    name: Adam
+    config:
+      lr: 0.001
+      weight_decay: 0.000001
+  dataset:
+    name: Cifar100
+    transforms:
+      #These may contain an attribute "prob", which allows transforms to be applied randomly.
+      RandomResizedCrop:
+        size: 32,32
+        scale: 0.08,1.0
+        ratio: 0.75,1.3333333333
+      RandomHorizontalFlip:
+        p: 0.5
+      ColorJitter:
+        brightness: 0.4
+        contrast: 0.4
+        saturation: 0.4
+        hue: 0.1
+        prob: 0.8
+      RandomGrayscale:
+        p: 0.2
+      GaussianBlur:
+        kernel_size: 3
+        prob: 0.5
+  model_dimension:
+    embedding_dimension: 2048
+testing:
+  testing: True
+  testing_every_n_epochs: 100 # or None
+  batch_size: 256
+  num_workers_loader: 0 # when using > 0 leads to warning "ParallelNative.cpp:214] Warning: Cannot set number of intraop threads after parallel work has started or after set_num_threads call when using native parallel backend (function set_num_threads" 
+  max_epochs: 60 # 
+  dataset:
+    val_percentage: .1
+    name: "Cifar100"
+  optimizer:
+    lr: 0.001
+  param_tuning:
+    log_min: -6
+    log_max: -1
+    n_steps: 5
