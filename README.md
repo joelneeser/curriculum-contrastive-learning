@@ -38,3 +38,7 @@ This is a short explanation of the most important configuration parameters that 
 - Jérôme Kuner
 - Jonas Mehr
 - Lukas Mouton
+
+## Licenses
+
+All code in this repository is licensed under the **MIT License** (see [LICENSE](./LICENSE)). The paper (`paper.pdf`) is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** license (see [LICENSE-paper.md](./LICENSE-paper)).
